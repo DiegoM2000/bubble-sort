@@ -1,0 +1,53 @@
+//Bubble sort implementation
+//Loop through the input array, find the maximum element and put it into the sorted_array
+// and then clear the maximum element from the read_array
+#include <iostream>
+#include <climits>
+#include <vector>
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+int numbers_read = 0;
+
+int max_element(vector<int> &array) {			//Calls the vector ("array") of unsorted numbers by reference to sort the numbers.
+	int max_number = array.at(0);				//Sets the largest number to value in element 0 automatically.
+	int index_no = 0;
+	for (int i = 0; i < numbers_read; i++) {
+		if (array.at(i) > max_number) {			//If the value at element 'i' is larger than max_number
+			max_number = array.at(i);			//Set max_number to the value at index i
+			index_no = i;						//and hold the element number in index_no
+		}
+	}
+	array.at(index_no) = INT_MIN;				//The index value held in index_no has its value set to the minimum value possible in an int to essentially delete it for later sorting.
+	return max_number;							//The max_number is then returned to max_num
+}
+
+int main() {
+	//First read in numbers until a 0 is read
+	vector<int> array(MAX_SIZE);
+	cout << "Please insert numbers to sort (0 to end)\n";
+	while (cin) {												//Logs user's numbers until they type "0" to quit. Logging a non-integer, or reaching the limit also ends the loop.
+		int temp;
+		cin >> temp;
+		if (!cin || temp == 0 || numbers_read >= MAX_SIZE) break;
+		array.at(numbers_read++) = temp;						//Each loop increments numbers_read by 1, which in turn increments array.at() and stores temp into the value "array's" index
+	}
+	//Print out array
+	cout << "You have entered the following array: " << endl;
+	for (int i = 0; i < numbers_read; i++)
+		cout << "Element " << i << ": " << array.at(i) << endl;
+	//Now sort the array
+	vector<int> sarray(MAX_SIZE);
+	for (int i = 0; i < numbers_read; i++) {
+		//YOU: Write code here
+		int max_num = max_element(array); 						//Calls the function to sort the array of unsorted numbers.
+		sarray.at(i) = max_num;									//And for each time the largest number is found, it stores it into the next index of vector "sarray".
+	}
+
+
+	//Print out the sorted array
+	cout << "Here is the sorted array: " << endl;
+	for (int i = 0; i < numbers_read; i++)
+		cout << "Element " << i << ": " << sarray.at(i) << endl;
+}
